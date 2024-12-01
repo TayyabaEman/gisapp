@@ -31,7 +31,7 @@ const pakistanStyle = new Style({
 // Create vector layer for Pakistan boundary
 const pakistanBoundary = new VectorLayer({
   source: new VectorSource({
-    url: 'data/pakBoundary.geojson',
+    url: '/data/pakBoundary.geojson',
     format: new GeoJSON()
   }),
   style: pakistanStyle
