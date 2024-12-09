@@ -28,6 +28,27 @@ const pakistanStyle = new Style({
     })
   })
 });
+
+const provinceStyle = new Style({
+  stroke: new Stroke({
+    color: '#ff4d4d',
+    width: 1.5
+  }),
+  fill: new Fill({
+    color: 'rgba(255, 255, 255, 0.1)'
+  }),
+  text: new Text({
+    font: 'bold 14px Arial',
+    fill: new Fill({
+      color: '#000000'
+    }),
+    stroke: new Stroke({
+      color: '#ffffff',
+      width: 2
+    })
+  })
+});
+
 // Create vector layer for Pakistan boundary
 const pakistanBoundary = new VectorLayer({
   source: new VectorSource({
@@ -36,6 +57,19 @@ const pakistanBoundary = new VectorLayer({
   }),
   style: pakistanStyle
 });
+// Create vector layer for provinces
+const provinceBoundaries = new VectorLayer({
+  source: new VectorSource({
+    url: '/provinces.geojson',
+    format: new GeoJSON()
+  }),
+  style: function(feature) {
+    const provinceName = feature.get('name'); // Assuming 'name' is the property in your GeoJSON
+    provinceStyle.getText().setText(provinceName);
+    return provinceStyle;
+  }
+});
+
 
 const map = new Map({
   target: 'map',
@@ -43,6 +77,7 @@ const map = new Map({
     new TileLayer({
       source: new OSM()
     }),
+    provinceBoundaries,
     pakistanBoundary
   ],
   view: new View({
