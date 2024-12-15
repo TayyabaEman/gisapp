@@ -7,6 +7,36 @@ import VectorSource from 'ol/source/Vector';
 import GeoJSON from 'ol/format/GeoJSON';
 import {fromLonLat} from 'ol/proj';
 import {Style, Fill, Stroke, Text} from 'ol/style';
+import {getRenderPixel} from 'ol/render.js';
+import ImageTile from 'ol/source/XYZ';
+
+
+const osm = new TileLayer({
+  source: new OSM(),
+});
+
+const key = 'Get your own API key at https://www.maptiler.com/cloud/';
+const attributions =
+  '<a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a> ' +
+  '<a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>';
+
+const aerial = new TileLayer({
+  source: new ImageTile({
+    attributions: attributions,
+    url: 'https://api.maptiler.com/maps/satellite/{z}/{x}/{y}.jpg?key=' + key,
+    tileSize: 512,
+    maxZoom: 20,
+  }),
+});
+const highlightStyle = new Style({
+  fill: new Fill({
+    color: '#EEE',
+  }),
+  stroke: new Stroke({
+    color: '#3399CC',
+    width: 2,
+  }),
+});
 
 const pakistanStyle = new Style({
   stroke: new Stroke({
@@ -62,26 +92,79 @@ const provinceBoundaries = new VectorLayer({
   source: new VectorSource({
     url: '/provinces.geojson',
     format: new GeoJSON()
-  }),
-  style: function(feature) {
-    const provinceName = feature.get('name'); // Assuming 'name' is the property in your GeoJSON
-    provinceStyle.getText().setText(provinceName);
-    return provinceStyle;
-  }
+  })
 });
+
+// Add these event listeners
+provinceBoundaries.getSource().on('featuresloadend', function() {
+  console.log('Provinces loaded successfully');
+});
+
+provinceBoundaries.getSource().on('featuresloaderror', function() {
+  console.error('Error loading provinces');
+});
+
 
 
 const map = new Map({
   target: 'map',
   layers: [
-    new TileLayer({
-      source: new OSM()
-    }),
+    osm,
+    aerial,
     provinceBoundaries,
     pakistanBoundary
   ],
   view: new View({
-    center: fromLonLat([69.3451, 30.3753]), // Pakistan's approximate center
+    center: fromLonLat([69.3451, 30.3753]),
     zoom: 5.5
   })
+});
+
+const swipe = document.getElementById('swipe');
+
+aerial.on('prerender', function (event) {
+  const ctx = event.context;
+  const mapSize = map.getSize();
+  const width = mapSize[0] * (swipe.value / 100);
+  const tl = getRenderPixel(event, [width, 0]);
+  const tr = getRenderPixel(event, [mapSize[0], 0]);
+  const bl = getRenderPixel(event, [width, mapSize[1]]);
+  const br = getRenderPixel(event, mapSize);
+
+  ctx.save();
+  ctx.beginPath();
+  ctx.moveTo(tl[0], tl[1]);
+  ctx.lineTo(bl[0], bl[1]);
+  ctx.lineTo(br[0], br[1]);
+  ctx.lineTo(tr[0], tr[1]);
+  ctx.closePath();
+  ctx.clip();
+});
+
+aerial.on('postrender', function (event) {
+  const ctx = event.context;
+  ctx.restore();
+});
+
+swipe.addEventListener('input', function () {
+  map.render();
+});
+
+const selected = [];
+
+const status = document.getElementById('status');
+
+map.on('singleclick', function (e) {
+  map.forEachFeatureAtPixel(e.pixel, function (f) {
+    const selIndex = selected.indexOf(f);
+    if (selIndex < 0) {
+      selected.push(f);
+      f.setStyle(highlightStyle);
+    } else {
+      selected.splice(selIndex, 1);
+      f.setStyle(undefined);
+    }
+  });
+
+  status.innerHTML = '&nbsp;' + selected.length + ' selected features';
 });
