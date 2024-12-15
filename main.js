@@ -15,7 +15,8 @@ const osm = new TileLayer({
   source: new OSM(),
 });
 
-const key = 'Get your own API key at https://www.maptiler.com/cloud/';
+const key = 'YOUR_ACTUAL_MAPTILER_API_KEY';
+
 const attributions =
   '<a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a> ' +
   '<a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>';
@@ -120,34 +121,35 @@ const map = new Map({
   })
 });
 
-// Wrap the swipe-related code in DOMContentLoaded event
-document.addEventListener('DOMContentLoaded', function() {
-  const swipe = document.getElementById('swipe');
-  
-  aerial.on('prerender', function (event) {
-    const ctx = event.context;
-    const mapSize = map.getSize();
-    const width = mapSize[0] * (swipe.value / 100);
-    const tl = getRenderPixel(event, [width, 0]);
-    const tr = getRenderPixel(event, [mapSize[0], 0]);
-    const bl = getRenderPixel(event, [width, mapSize[1]]);
-    const br = getRenderPixel(event, mapSize);
+const swipe = document.getElementById('swipe');
 
-    ctx.save();
-    ctx.beginPath();
-    ctx.moveTo(tl[0], tl[1]);
-    ctx.lineTo(bl[0], bl[1]);
-    ctx.lineTo(br[0], br[1]);
-    ctx.lineTo(tr[0], tr[1]);
-    ctx.closePath();
-    ctx.clip();
-  });
+aerial.on('prerender', function (event) {
+  const ctx = event.context;
+  const mapSize = map.getSize();
+  const width = mapSize[0] * (swipe.value / 100);
+  const tl = getRenderPixel(event, [width, 0]);
+  const tr = getRenderPixel(event, [mapSize[0], 0]);
+  const bl = getRenderPixel(event, [width, mapSize[1]]);
+  const br = getRenderPixel(event, mapSize);
 
-  swipe.addEventListener('input', function () {
-    map.render();
-  });
+  ctx.save();
+  ctx.beginPath();
+  ctx.moveTo(tl[0], tl[1]);
+  ctx.lineTo(bl[0], bl[1]);
+  ctx.lineTo(br[0], br[1]);
+  ctx.lineTo(tr[0], tr[1]);
+  ctx.closePath();
+  ctx.clip();
 });
 
+aerial.on('postrender', function (event) {
+  const ctx = event.context;
+  ctx.restore();
+});
+
+swipe.addEventListener('input', function () {
+  map.render();
+});
 
 const selected = [];
 
