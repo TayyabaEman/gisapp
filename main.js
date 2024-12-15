@@ -9,6 +9,9 @@ import {fromLonLat} from 'ol/proj';
 import {Style, Fill, Stroke, Text} from 'ol/style';
 import {getRenderPixel} from 'ol/render.js';
 import ImageTile from 'ol/source/XYZ';
+import XYZ from 'ol/source/XYZ';
+
+
 
 
 const osm = new TileLayer({
@@ -21,14 +24,14 @@ const attributions =
   '<a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a> ' +
   '<a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>';
 
-const aerial = new TileLayer({
-  source: new ImageTile({
-    attributions: attributions,
-    url: 'https://api.maptiler.com/maps/satellite/?key=Yes3wYWUr5LVP6q2nKmE#1.0/0.00000/0.00000' + key,
-    tileSize: 512,
-    maxZoom: 20,
-  }),
-});
+  const aerial = new TileLayer({
+    source: new XYZ({
+      attributions: attributions,
+      url: 'https://api.maptiler.com/tiles/satellite/{z}/{x}/{y}.jpg?key=' + key,
+      maxZoom: 20,
+    }),
+  });
+  
 const highlightStyle = new Style({
   fill: new Fill({
     color: '#EEE',
