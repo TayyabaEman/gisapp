@@ -15,7 +15,7 @@ const osm = new TileLayer({
   source: new OSM(),
 });
 
-const key = 'YOUR_ACTUAL_MAPTILER_API_KEY';
+const key = 'Yes3wYWUr5LVP6q2nKmE';
 
 const attributions =
   '<a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a> ' +
@@ -24,7 +24,7 @@ const attributions =
 const aerial = new TileLayer({
   source: new ImageTile({
     attributions: attributions,
-    url: 'https://api.maptiler.com/maps/satellite/{z}/{x}/{y}.jpg?key=' + key,
+    url: 'https://api.maptiler.com/maps/satellite/?key=Yes3wYWUr5LVP6q2nKmE#1.0/0.00000/0.00000' + key,
     tileSize: 512,
     maxZoom: 20,
   }),
