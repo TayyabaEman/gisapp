@@ -156,13 +156,15 @@ swipe.addEventListener('input', function () {
   map.render();
 });
 
-var hn = "Hacker News";
-console.log(hn);
 
 const selected = [];
 
 const status = document.getElementById('status');
 
+
+// Line 166
+console.log(hn);  // Trying to use 'hn' too early
+let hn = "Hacker News";
 map.on('singleclick', function (e) {
   map.forEachFeatureAtPixel(e.pixel, function (f) {
     const selIndex = selected.indexOf(f);
