@@ -161,10 +161,10 @@ const selected = [];
 
 const status = document.getElementById('status');
 
-
-// Line 166
-console.log(hn);  // Trying to use 'hn' too early
-let hn = "Hacker News";
+const layerSwitcher = new LayerSwitcher({
+  collapsible: true,
+  collapsed: false
+});
 map.on('singleclick', function (e) {
   map.forEachFeatureAtPixel(e.pixel, function (f) {
     const selIndex = selected.indexOf(f);
@@ -201,7 +201,7 @@ const map = new Map({
 });
 
 // Add layer switcher control
-const layerSwitcher = new LayerSwitcher({
+const LayerSwitcher = new LayerSwitcher({
   tipLabel: 'Legend',
   groupSelectStyle: 'group'
 });
