@@ -156,6 +156,9 @@ swipe.addEventListener('input', function () {
   map.render();
 });
 
+var hn = "Hacker News";
+console.log(hn);
+
 const selected = [];
 
 const status = document.getElementById('status');
