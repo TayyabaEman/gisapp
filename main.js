@@ -10,6 +10,8 @@ import {Style, Fill, Stroke, Text} from 'ol/style';
 import {getRenderPixel} from 'ol/render.js';
 import ImageTile from 'ol/source/XYZ';
 import XYZ from 'ol/source/XYZ';
+import LayerSwitcher from 'ol-layerswitcher';
+import 'ol-layerswitcher/dist/ol-layerswitcher.css';
 
 
 
@@ -110,7 +112,7 @@ provinceBoundaries.getSource().on('featuresloaderror', function() {
 
 
 
-const map = new Map({
+const usermap = new Map({
   target: 'map',
   layers: [
     osm,
@@ -172,3 +174,30 @@ map.on('singleclick', function (e) {
 
   status.innerHTML = '&nbsp;' + selected.length + ' selected features';
 });
+// Create layer groups for better organization
+const baseMaps = new LayerGroup({
+  title: 'Base Maps',
+  layers: [osm, aerial]
+});
+
+const overlays = new LayerGroup({
+  title: 'Overlays',
+  layers: [provinceBoundaries, pakistanBoundary]
+});
+
+// Update map layers
+const map = new Map({
+  target: 'map',
+  layers: [baseMaps, overlays],
+  view: new View({
+    center: fromLonLat([69.3451, 30.3753]),
+    zoom: 5.5
+  })
+});
+
+// Add layer switcher control
+const layerSwitcher = new LayerSwitcher({
+  tipLabel: 'Legend',
+  groupSelectStyle: 'group'
+});
+map.addControl(layerSwitcher);
