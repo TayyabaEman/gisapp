@@ -161,7 +161,7 @@ const selected = [];
 
 const status = document.getElementById('status');
 
-const layerSwitcher = new LayerSwitcher({
+const layerswitcher = new LayerSwitcher({
   collapsible: true,
   collapsed: false
 });
@@ -205,4 +205,4 @@ const LayerSwitcher = new LayerSwitcher({
   tipLabel: 'Legend',
   groupSelectStyle: 'group'
 });
-map.addControl(layerSwitcher);
+map.addControl(LayerSwitcher);
