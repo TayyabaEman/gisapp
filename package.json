@@ -1,23 +1,17 @@
 {
   "name": "gisapp",
   "version": "1.0.0",
+  "description": "WebGIS Application",
+  "main": "index.js",
   "scripts": {
     "start": "vite",
     "build": "vite build",
     "serve": "vite preview"
   },
-  "devDependencies": {
-<<<<<<< HEAD
-    "vite": "^6.1.0"
-  },
   "dependencies": {
     "ol": "latest"
-=======
-    "vite": "^5.4.11"
   },
-  "dependencies": {
-    "ol": "latest",
-    "ol-layerswitcher": "^4.1.2"
->>>>>>> 9e9f2b027459a4f16dc4dd3fbd92b30616ebf597
+  "devDependencies": {
+    "vite": "^4.0.0"
   }
 }
