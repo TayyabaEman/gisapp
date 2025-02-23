@@ -1,8 +1,12 @@
 import Map from 'ol/Map';
 import View from 'ol/View';
 import TileLayer from 'ol/layer/Tile';
+import VectorLayer from 'ol/layer/Vector';
+import VectorSource from 'ol/source/Vector';
+import GeoJSON from 'ol/format/GeoJSON';
 import OSM from 'ol/source/OSM';
 
+// Create base map
 const map = new Map({
   target: 'map',
   layers: [
@@ -11,7 +15,17 @@ const map = new Map({
     })
   ],
   view: new View({
-    center: [0, 0],
-    zoom: 2
+    center: [7500000, 3500000],  // Centered on Pakistan
+    zoom: 5
   })
 });
+
+// Add Pakistan boundaries
+const pakistanBoundaries = new VectorLayer({
+  source: new VectorSource({
+    url: 'path/to/pakistan-boundaries.geojson',
+    format: new GeoJSON()
+  })
+});
+
+map.addLayer(pakistanBoundaries);
