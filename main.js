@@ -23,7 +23,7 @@ const map = new Map({
 // Add Pakistan boundaries
 const pakistanBoundaries = new VectorLayer({
   source: new VectorSource({
-    url: 'path/to/pakistan-boundaries.geojson',
+    url: 'D:\New folder\Tayyaba\vs code\WebGIS\gisapp\public',
     format: new GeoJSON()
   })
 });
