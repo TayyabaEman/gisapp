@@ -6,6 +6,8 @@ import VectorSource from 'ol/source/Vector';
 import GeoJSON from 'ol/format/GeoJSON';
 import OSM from 'ol/source/OSM';
 import { fromLonLat } from 'ol/proj';
+import {Style, Fill, Stroke} from 'ol/style';
+
 
 // Create base map
 const map = new Map({
