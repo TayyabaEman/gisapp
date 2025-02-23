@@ -35,10 +35,10 @@ map.addLayer(pakistanBoundaries);
 // Style for provinces
 const provinceStyle = new Style({
   fill: new Fill({
-    color: 'rgba(255, 255, 255, 0.4)'
+    color: 'rgba(250, 5, 5, 0.4)'
   }),
   stroke: new Stroke({
-    color: '#005900',
+    color: '#FF0000',
     width: 2
   })
 });
