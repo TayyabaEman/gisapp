@@ -25,8 +25,6 @@ const pakistanStyle = new Style({
   })
 });
 
-map.addLayer(pakistanBoundaries);
-
 
 // Style for provinces
 const provinceStyle = new Style({
