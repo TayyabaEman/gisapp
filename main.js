@@ -25,7 +25,6 @@ const pakistanStyle = new Style({
   })
 });
 
-
 // Style for provinces
 const provinceStyle = new Style({
   fill: new Fill({
