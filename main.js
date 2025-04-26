@@ -17,10 +17,10 @@ const baseLayer = new TileLayer({
 // Style for Pakistan boundary
 const pakistanStyle = new Style({
   fill: new Fill({
-    color: 'rgba(210, 180, 140, 0.4)'
+    color: 'rgba(241, 8, 8, 0.4)'
   }),
   stroke: new Stroke({
-    color: '#8B4513',
+    color: '#FF0000',
     width: 2
   })
 });
@@ -28,10 +28,10 @@ const pakistanStyle = new Style({
 // Style for provinces
 const provinceStyle = new Style({
   fill: new Fill({
-    color: 'rgba(173, 216, 230, 0.4)'
+    color: 'rgba(5, 158, 31, 0.4)'
   }),
   stroke: new Stroke({
-    color: '#4682B4',
+    color: '#008000',
     width: 1
   })
 });
