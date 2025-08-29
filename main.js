@@ -39,7 +39,7 @@ const provinceStyle = new Style({
 // Create vector layer for Pakistan boundary
 const pakistanLayer = new VectorLayer({
   source: new VectorSource({
-    url: './public/pakBoundary.geojson', 
+    url: '/public/pakBoundary.geojson', 
     format: new GeoJSON()
   }),
   style: pakistanStyle
@@ -48,7 +48,7 @@ const pakistanLayer = new VectorLayer({
 // Create vector layer for provinces
 const provincesLayer = new VectorLayer({
   source: new VectorSource({
-    url: './public/provinces.geojson', 
+    url: '/public/provinces.geojson', 
     format: new GeoJSON()
   }),
   style: provinceStyle
