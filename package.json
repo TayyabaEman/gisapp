@@ -12,6 +12,6 @@
     "ol": "latest"
   },
   "devDependencies": {
-    "vite": "^4.0.0"
+    "vite": "^6.1.1"
   }
 }
